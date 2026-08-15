@@ -71,15 +71,15 @@
 
 ## Antigravity coding and deployment follow-up
 
-- [ ] Start a fresh Antigravity terminal OAuth flow and complete authorization through user takeover within the valid time window.
-- [ ] Run a plan-mode, non-destructive Antigravity analysis of the SellBuilding AI Agent project after account authorization.
-- [ ] Define the exact GitHub write/deployment automation scope and obtain explicit approval before any repository or workflow mutation.
-- [ ] If approved, configure the minimum GitHub Actions/deployment automation and run a reversible, observable deployment verification.
+- [x] Start a fresh Antigravity terminal OAuth flow; document that browser consent alone cannot complete the remote terminal session without returning a sensitive authorization code, which is not handled by the agent.
+- [x] Attempt a non-destructive project plan analysis through the Gemini provider; document the headless command-permission/internal execution limitation after safe retries while retaining the successful provider smoke test.
+- [x] Define the exact GitHub write/deployment automation scope and obtain explicit approval before any repository or workflow mutation.
+- [x] Configure the approved GitHub Actions validation automation and verify a successful run; keep Manus deployment separate because no GitHub-to-Manus deployment credential or connector is provisioned.
 
 ## Antigravity OAuth fallback
 
 - [x] Document that remote Antigravity OAuth requires a user-returned authorization code and therefore cannot be completed by the agent without handling a sensitive code.
-- [ ] Restore the documented Gemini API-key provider setting and run a non-destructive Antigravity plan-mode analysis of the project.
+- [x] Restore the documented Gemini API-key provider setting; attempt the non-destructive project analysis and document the headless tool-execution limitation rather than claiming a result.
 - [x] Ask the user to explicitly select GitHub automation scope before any write, workflow-dispatch, repository export, or external deployment action.
 
 ## Approved GitHub scope awaiting target confirmation
@@ -88,7 +88,7 @@
 - [x] Inspect the confirmed target repository's default branch, existing workflows, and protections without modifying it.
 - [x] Prepare a source export and CI workflow change set with Manus deployment credentials excluded from version control.
 - [x] Obtain final approval that identifies the repository and the exact push/workflow write actions before mutating GitHub.
-- [ ] Keep `balajirajput96/B` unchanged after its malformed historical pathname rejected the approved source/CI push; resolve only with separate user approval if `B` must later become the source destination.
+- [x] Keep `balajirajput96/B` unchanged after its malformed historical pathname rejected the approved source/CI push; resolve only with separate user approval if `B` must later become the source destination.
 - [x] Read the confirmed repository's branch protection or ruleset configuration and validate the planned push against those constraints.
 
 ## GitHub export recovery
@@ -98,3 +98,18 @@
 - [x] Publish the prepared source export and validation CI to the approved recovery repository and verify its initial Actions run.
 - [x] Fix the validation CI pnpm setup so it relies on the package-managed pnpm version rather than declaring it twice, then verify a passing Actions run.
 - [x] Document `balajirajput96/sellbuilding-ai-agent` as the canonical private GitHub source repository and distinguish it from the unaffected `B` recovery candidate.
+
+## Daily GitHub review automation request
+
+- [x] Confirm the single repository, daily execution time/timezone, report destination, and whether automation remains review-only with no automatic code writes.
+- [x] Document the Antigravity terminal OAuth boundary and select a supported Gemini-provider fallback for any non-interactive analysis.
+- [x] Configure the approved daily GitHub review schedule with the enabled GitHub connector and only the selected repository scope.
+- [x] Run and verify one non-destructive review cycle, then document pause/manage controls.
+
+## Daily GitHub Issue review selection
+
+- [x] Confirm `balajirajput96/sellbuilding-ai-agent` as the daily 10:00 IST review target with GitHub Issues-only reporting, no automatic code changes or pull requests.
+- [x] Create a daily 10:00 IST review schedule that can inspect only the approved repository and create deduplicated GitHub Issues for actionable findings.
+- [x] Verify a manually triggered review produces no source mutations and document the pause/manage path.
+- [x] Create and verify one evidence-based GitHub Issue from the initial dependency-audit review without changing source code.
+- [x] Add permanent documentation for inspecting, pausing, and resuming the daily GitHub review schedule.

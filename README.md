@@ -40,6 +40,12 @@ The canonical private source repository is [`balajirajput96/sellbuilding-ai-agen
 
 The earlier candidate repository, `balajirajput96/B`, remains unchanged. Its existing history contains a malformed overly long pathname that causes normal GitHub pushes to be rejected, so it was intentionally not repaired, rewritten, or used as the final source destination.
 
+## Daily GitHub review automation
+
+The active `Daily SellBuilding GitHub review` schedule runs daily at **10:00 Asia/Kolkata** (`04:30 UTC`) and is restricted to `balajirajput96/sellbuilding-ai-agent`. It performs evidence-led review, searches for duplicate open Issues, and may create at most three new actionable findings prefixed **`[AI Review]`**. Findings are reported only as GitHub Issues; the run report remains internal to the task. It must not edit source files, commit, push, open pull requests, merge, alter workflows, deploy, expose secrets, or access `balajirajput96/B`.
+
+The project owner can inspect the schedule in the project **Schedules** panel. To manage it from an authorized workspace session, inspect it with `manus-config schedule status --limit 1000 --offset 0`; pause it with `manus-config schedule update --enabled=false`; and resume it with `manus-config schedule update --enabled=true`. The initial evidence-based review created [Issue #1](https://github.com/balajirajput96/sellbuilding-ai-agent/issues/1) without changing repository source.
+
 ## Integration boundary
 
 The app uses managed, server-side AI and image services supplied by the project runtime. Browser logins, personal Google accounts, and external connector credentials remain separate from this web app; they are not copied into the client or stored in the database. Any future GitHub, Google, Hugging Face, or other third-party product integration should use a dedicated server-side OAuth or API connector with user-approved credentials and an ownership-scoped data model.
