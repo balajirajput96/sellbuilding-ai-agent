@@ -88,11 +88,13 @@
 - [x] Inspect the confirmed target repository's default branch, existing workflows, and protections without modifying it.
 - [x] Prepare a source export and CI workflow change set with Manus deployment credentials excluded from version control.
 - [x] Obtain final approval that identifies the repository and the exact push/workflow write actions before mutating GitHub.
-- [ ] Push the approved source export and CI workflow to the approved target repository, then verify the resulting Actions run.
+- [ ] Keep `balajirajput96/B` unchanged after its malformed historical pathname rejected the approved source/CI push; resolve only with separate user approval if `B` must later become the source destination.
 - [x] Read the confirmed repository's branch protection or ruleset configuration and validate the planned push against those constraints.
 
 ## GitHub export recovery
 
 - [x] Choose and obtain approval for a non-destructive destination after `balajirajput96/B` rejects pushes because its existing history includes an excessively long pathname.
 - [x] Create the approved private recovery repository `balajirajput96/sellbuilding-ai-agent` without deleting or rewriting existing `balajirajput96/B` history.
-- [ ] Publish the prepared source export and validation CI to the approved recovery repository and verify its initial Actions run.
+- [x] Publish the prepared source export and validation CI to the approved recovery repository and verify its initial Actions run.
+- [x] Fix the validation CI pnpm setup so it relies on the package-managed pnpm version rather than declaring it twice, then verify a passing Actions run.
+- [x] Document `balajirajput96/sellbuilding-ai-agent` as the canonical private GitHub source repository and distinguish it from the unaffected `B` recovery candidate.

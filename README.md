@@ -34,6 +34,12 @@ The automated suite covers logout behavior, per-user ownership checks, cron-expr
 
 First create a checkpoint from the project workspace. Then use the **Publish** control in the project interface. The application uses managed hosting and the published URL is required before creating Scheduled Tasks.
 
+## GitHub source control
+
+The canonical private source repository is [`balajirajput96/sellbuilding-ai-agent`](https://github.com/balajirajput96/sellbuilding-ai-agent). Its `SellBuilding validation` workflow has read-only repository permission and runs `pnpm check`, `pnpm test`, and `pnpm build` on pushes and pull requests to `main`; it does not deploy the app or require deployment secrets. The live application remains deployed on Manus-managed hosting.
+
+The earlier candidate repository, `balajirajput96/B`, remains unchanged. Its existing history contains a malformed overly long pathname that causes normal GitHub pushes to be rejected, so it was intentionally not repaired, rewritten, or used as the final source destination.
+
 ## Integration boundary
 
 The app uses managed, server-side AI and image services supplied by the project runtime. Browser logins, personal Google accounts, and external connector credentials remain separate from this web app; they are not copied into the client or stored in the database. Any future GitHub, Google, Hugging Face, or other third-party product integration should use a dedicated server-side OAuth or API connector with user-approved credentials and an ownership-scoped data model.
