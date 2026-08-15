@@ -46,6 +46,10 @@ The active `Daily SellBuilding GitHub review` schedule runs daily at **10:00 Asi
 
 The project owner can inspect the schedule in the project **Schedules** panel. To manage it from an authorized workspace session, inspect it with `manus-config schedule status --limit 1000 --offset 0`; pause it with `manus-config schedule update --enabled=false`; and resume it with `manus-config schedule update --enabled=true`. The initial evidence-based review created [Issue #1](https://github.com/balajirajput96/sellbuilding-ai-agent/issues/1) without changing repository source.
 
+## Gemini CLI and Google Jules access boundary
+
+Gemini CLI supports an interactive Google browser login, an API-key path, and Vertex AI credentials. In this remote environment, a browser login requires a local terminal callback or a sensitive one-time authorization code; the project therefore retains the configured Gemini API-key provider as the supported non-interactive fallback and does not claim a persisted Google CLI session. Google Jules requires user-completed Google sign-in, privacy consent, and a GitHub account connection with explicit repository selection. Jules may then prepare plans and code changes in its own environment, but this project does not submit or approve Jules tasks, repository permissions, code changes, or pull requests without a separate user confirmation.
+
 ## Integration boundary
 
 The app uses managed, server-side AI and image services supplied by the project runtime. Browser logins, personal Google accounts, and external connector credentials remain separate from this web app; they are not copied into the client or stored in the database. Any future GitHub, Google, Hugging Face, or other third-party product integration should use a dedicated server-side OAuth or API connector with user-approved credentials and an ownership-scoped data model.

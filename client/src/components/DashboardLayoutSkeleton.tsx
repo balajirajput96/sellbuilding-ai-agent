@@ -2,9 +2,15 @@ import { Skeleton } from './ui/skeleton';
 
 export function DashboardLayoutSkeleton() {
   return (
-    <div className="flex min-h-screen bg-background">
+    <div
+      className="flex min-h-screen bg-background"
+      role="status"
+      aria-live="polite"
+      aria-label="Loading your secure workspace"
+    >
+      <span className="sr-only">Loading your secure workspace.</span>
       {/* Sidebar skeleton */}
-      <div className="w-[280px] border-r border-border bg-background p-4 space-y-6">
+      <div className="relative hidden w-[280px] border-r border-border bg-background p-4 space-y-6 md:block">
         {/* Logo area */}
         <div className="flex items-center gap-3 px-2">
           <Skeleton className="h-8 w-8 rounded-md" />
@@ -31,9 +37,13 @@ export function DashboardLayoutSkeleton() {
       </div>
 
       {/* Main content skeleton */}
-      <div className="flex-1 p-4 space-y-4">
+      <div className="flex-1 space-y-4 p-4 lg:p-6">
         {/* Content blocks */}
-        <Skeleton className="h-12 w-48 rounded-lg" />
+        <div className="space-y-2">
+          <p className="text-sm font-medium text-foreground">Loading your workspace</p>
+          <p className="text-sm text-muted-foreground">Securing your session and preparing your tools.</p>
+        </div>
+        <Skeleton className="h-10 w-44 rounded-lg" />
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           <Skeleton className="h-32 rounded-xl" />
           <Skeleton className="h-32 rounded-xl" />

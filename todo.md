@@ -113,3 +113,17 @@
 - [x] Verify a manually triggered review produces no source mutations and document the pause/manage path.
 - [x] Create and verify one evidence-based GitHub Issue from the initial dependency-audit review without changing source code.
 - [x] Add permanent documentation for inspecting, pausing, and resuming the daily GitHub review schedule.
+
+## Gemini CLI and Google Jules follow-up
+
+- [ ] Verify the installed Gemini CLI authentication options and document the credential-safe login path.
+- [ ] Install the official Gemini CLI after validating the published package, then re-check its supported authentication options.
+- [ ] Verify the supported Google Jules access/login path and identify whether user takeover is required.
+- [ ] Confirm the specific code improvements to implement before making source changes; keep the daily GitHub review schedule review-only unless separately approved.
+- [ ] Perform a safe schedule-status/test verification without creating unauthorized code changes, pull requests, or deployments.
+
+## Reported screen fix
+
+- [x] Identify the affected SellBuilding screen/rendering issue using current desktop and mobile previews.
+- [x] Apply a targeted layout or rendering correction without changing authentication or automation behavior.
+- [x] Verify the corrected screen on desktop and mobile, then run relevant regression tests.

@@ -26,6 +26,10 @@ After the workspace owner completed a fresh sign-in, the live preview was checke
 
 The authenticated development preview was also opened with its internal feedback-preview state. The AI Chat Agent history-loading capture showed three conversation-list skeleton rows and a visible **“Loading conversation history…”** status notice above the empty chat canvas. The Settings preferences-loading capture showed the intended three-row preferences skeleton before preference values are available. These states preserve page hierarchy and leave all contextual labels visible rather than presenting a blank screen.
 
+### Latest dashboard screen verification
+
+The preview may initially capture the shared dashboard skeleton before the authenticated `auth.me` query settles. A subsequent settled authenticated capture showed the complete dashboard: sidebar navigation, account menu, workspace headline, metric cards, activity panel, start-action links, recent-images panel, and workflow-executions panel. No layout overflow, hidden controls, or persistent rendering fault was observed on the settled desktop screen; the initial skeleton is therefore treated as an intentional loading state rather than a production screen defect.
+
 ### State-specific error captures
 
 The AI Chat Agent history-error capture displayed both a sidebar alert—**“Conversations could not be loaded.”**—and an in-canvas recovery message—**“This conversation could not be loaded. Choose another conversation or refresh.”** The Settings preferences-error capture displayed **“Workspace preferences could not be loaded. Refresh to try again.”** while keeping the independently verified, non-secret capability cards available. Both errors use visible red alert treatment, retain keyboard-reachable navigation, and preserve a usable fallback layout.
