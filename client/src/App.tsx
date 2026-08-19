@@ -1,32 +1,37 @@
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import NotFound from "@/pages/NotFound";
+import { lazy, Suspense } from "react";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
+import { DashboardLayoutSkeleton } from "./components/DashboardLayoutSkeleton";
 import { ThemeProvider } from "./contexts/ThemeContext";
-import DashboardHome from "./pages/DashboardHome";
-import AIChatAgent from "./pages/AIChatAgent";
-import ImageGeneration from "./pages/ImageGeneration";
-import WorkflowAutomation from "./pages/WorkflowAutomation";
-import ScheduledTasks from "./pages/ScheduledTasks";
-import TaskHistory from "./pages/TaskHistory";
-import Settings from "./pages/Settings";
+
+const DashboardHome = lazy(() => import("./pages/DashboardHome"));
+const AIChatAgent = lazy(() => import("./pages/AIChatAgent"));
+const ImageGeneration = lazy(() => import("./pages/ImageGeneration"));
+const WorkflowAutomation = lazy(() => import("./pages/WorkflowAutomation"));
+const ScheduledTasks = lazy(() => import("./pages/ScheduledTasks"));
+const TaskHistory = lazy(() => import("./pages/TaskHistory"));
+const Settings = lazy(() => import("./pages/Settings"));
+const NotFound = lazy(() => import("@/pages/NotFound"));
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
   return (
-    <Switch>
-      <Route path={"/"} component={DashboardHome} />
-      <Route path={"/ai-chat-agent"} component={AIChatAgent} />
-      <Route path={"/image-generation"} component={ImageGeneration} />
-      <Route path={"/workflow-automation"} component={WorkflowAutomation} />
-      <Route path={"/scheduled-tasks"} component={ScheduledTasks} />
-      <Route path={"/task-history"} component={TaskHistory} />
-      <Route path={"/settings"} component={Settings} />
-      <Route path={"/404"} component={NotFound} />
-      {/* Final fallback route */}
-      <Route component={NotFound} />
-    </Switch>
+    <Suspense fallback={<DashboardLayoutSkeleton />}>
+      <Switch>
+        <Route path={"/"} component={DashboardHome} />
+        <Route path={"/ai-chat-agent"} component={AIChatAgent} />
+        <Route path={"/image-generation"} component={ImageGeneration} />
+        <Route path={"/workflow-automation"} component={WorkflowAutomation} />
+        <Route path={"/scheduled-tasks"} component={ScheduledTasks} />
+        <Route path={"/task-history"} component={TaskHistory} />
+        <Route path={"/settings"} component={Settings} />
+        <Route path={"/404"} component={NotFound} />
+        {/* Final fallback route */}
+        <Route component={NotFound} />
+      </Switch>
+    </Suspense>
   );
 }
 
