@@ -1,0 +1,83 @@
+name: Hourly maintenance health
+
+on:
+  schedule:
+    - cron: "0 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+  issues: read
+  security-events: read
+
+concurrency:
+  group: hourly-maintenance-health
+  cancel-in-progress: true
+
+jobs:
+  health:
+    name: Read-only repository health review
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run local validation
+        run: |
+          pnpm check
+          pnpm test
+          pnpm build
+
+      - name: Collect GitHub read-only health report
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p health-report
+          report=health-report/hourly-health.json
+          tmp=health-report/dependabot.json
+          dependabot_status="unknown"
+          if gh api "repos/${GITHUB_REPOSITORY}/dependabot/alerts?per_page=100" > "$tmp" 2>health-report/dependabot-error.txt; then
+            dependabot_status="available"
+          else
+            dependabot_status="unavailable"
+            printf '{"status":"unavailable","error":"endpoint returned an error; see workflow log status only"}\n' > "$tmp"
+          fi
+          jq -n \
+            --arg repository "$GITHUB_REPOSITORY" \
+            --arg sha "$GITHUB_SHA" \
+            --arg ref "$GITHUB_REF" \
+            --arg run_id "$GITHUB_RUN_ID" \
+            --arg dependabot_status "$dependabot_status" \
+            --arg generated_at "$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
+            '{repository:$repository,commit:$sha,ref:$ref,workflow_run_id:$run_id,generated_at:$generated_at,checks:{source_read:true,local_validation:true,repository_metadata:true,workflow_runs_read:true,open_issues_read:true,dependabot_endpoint:$dependabot_status},write_policy:"read-only",mutation_policy:{source:false,issues:false,workflows:false,secret_changes:false,permissions:false,merges:false,force_push:false,visibility:false,deployment:false}}' > "$report"
+
+          gh api "repos/${GITHUB_REPOSITORY}" --jq '{default_branch,visibility,archived}' > health-report/repository.json
+          gh run list --repo "$GITHUB_REPOSITORY" --limit 10 --json databaseId,name,status,conclusion,headSha,createdAt,url > health-report/workflow-runs.json
+          gh issue list --repo "$GITHUB_REPOSITORY" --state open --limit 100 --json number,title,state,updatedAt,url > health-report/open-issues.json
+          printf '%s\n' "Dependabot endpoint status: $dependabot_status"
+          printf '%s\n' "Read-only health report written to $report"
+
+      - name: Upload health report
+        uses: actions/upload-artifact@v4
+        with:
+          name: hourly-maintenance-health-${{ github.run_id }}
+          path: health-report/
+          if-no-files-found: error
+          retention-days: 14
