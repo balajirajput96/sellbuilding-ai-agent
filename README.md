@@ -32,7 +32,7 @@ The automated suite covers logout behavior, per-user ownership checks, cron-expr
 
 ## Dependency security posture
 
-The production dependency graph was remediated against the actionable findings recorded in GitHub Issue #1. The AWS SDK packages are on the current patched `3.1118.0` line, Axios is on `1.20.0`, Streamdown is on `2.6.0`, and `mdast-util-to-hast` is explicitly pinned to `13.2.1` so both Markdown conversion paths resolve to the patched release. The tRPC packages are aligned on `11.18.0`. Express is on `5.2.1`; the storage proxy and Vite SPA fallback use RegExp matchers because Express 5 rejects unnamed `*` route patterns.
+The production dependency graph was remediated against the actionable findings recorded in GitHub Issue #1. The AWS SDK packages are on the current patched `3.1118.0` line, Axios is on `1.20.0`, Streamdown is on `2.6.0`, and `mdast-util-to-hast` is explicitly pinned to `13.2.1` so both Markdown conversion paths resolve to the patched release. The tRPC packages are aligned on `11.18.0`. Express remains on the compatible `4.21.2` manifest line, while the active pnpm workspace overrides resolve patched `body-parser`, `qs`, `path-to-regexp`, and related transitive packages.
 
 GitHub Issue #3's Vitest advisory is remediated by pinning the direct development dependency to `vitest@3.2.6`, the first patched release identified by the advisory. `vitest.config.ts` uses the non-UI `vitest run` script and does not configure an externally bound UI/API server. Pnpm v10 security configuration is stored in `pnpm-workspace.yaml`, where the Wouter patch and NanoID override are active; obsolete `package.json` pnpm settings were removed because pnpm v10 ignores them.
 
