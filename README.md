@@ -30,6 +30,14 @@ pnpm test
 
 The automated suite covers logout behavior, per-user ownership checks, cron-expression validation, scheduled-task pause protection, workflow completion persistence, and workflow failure persistence.
 
+## Dependency security posture
+
+The production dependency graph was remediated against the actionable findings recorded in GitHub Issue #1. The AWS SDK packages are on the current patched `3.1118.0` line, Axios is on `1.20.0`, Streamdown is on `2.6.0`, and `mdast-util-to-hast` is explicitly pinned to `13.2.1` so both Markdown conversion paths resolve to the patched release. The tRPC packages are aligned on `11.18.0`. Express is on `5.2.1`; the storage proxy and Vite SPA fallback use RegExp matchers because Express 5 rejects unnamed `*` route patterns.
+
+GitHub Issue #3's Vitest advisory is remediated by pinning the direct development dependency to `vitest@3.2.6`, the first patched release identified by the advisory. `vitest.config.ts` uses the non-UI `vitest run` script and does not configure an externally bound UI/API server. Pnpm v10 security configuration is stored in `pnpm-workspace.yaml`, where the Wouter patch and NanoID override are active; obsolete `package.json` pnpm settings were removed because pnpm v10 ignores them.
+
+The current production audit reports zero info, low, moderate, high, or critical vulnerabilities. Future audit runs should still review upstream advisories and preserve the explicit workspace pins rather than force-upgrading packages across potentially breaking major versions.
+
 ## Publish workflow
 
 First create a checkpoint from the project workspace. Then use the **Publish** control in the project interface. The application uses managed hosting and the published URL is required before creating Scheduled Tasks.
@@ -49,6 +57,8 @@ The project owner can inspect the schedule in the project **Schedules** panel. T
 ## Gemini CLI and Google Jules access boundary
 
 Gemini CLI supports an interactive Google browser login, an API-key path, and Vertex AI credentials. In this remote environment, a browser login requires a local terminal callback or a sensitive one-time authorization code; the project therefore retains the configured Gemini API-key provider as the supported non-interactive fallback and does not claim a persisted Google CLI session. Google Jules requires user-completed Google sign-in, privacy consent, and a GitHub account connection with explicit repository selection. Jules may then prepare plans and code changes in its own environment, but this project does not submit or approve Jules tasks, repository permissions, code changes, or pull requests without a separate user confirmation.
+
+The post-login Jules verification confirmed an authenticated Google session, but the visible Jules workspace was scoped to a different repository (`balajirajput96/github-mcp-server-`) and showed an existing daily schedule at `03:30 UTC`. This is not the approved SellBuilding target or the requested 10:00 IST timing, so it is intentionally left unchanged pending a new, explicit user decision.
 
 ## Integration boundary
 
